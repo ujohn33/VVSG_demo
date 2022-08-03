@@ -123,3 +123,6 @@ if __name__ == "__main__":
     ax.set_xlabel('Weekday')
     # x axis ticks to show the string names of the weekdays
     st.pyplot(fig)
+    st.write('Download the profile as a CSV file')
+    st.download_button('Download profile', ts,  filename='profile_cluster{}.csv'.format(cluster[0]))
+    
