@@ -126,4 +126,6 @@ if __name__ == "__main__":
     st.write('Download the profile as a CSV file')
     # change series to csv format
     profile_dw = ts.to_csv().encode('utf-8')
+    # fill spaces with underscores in building type
+    building_type = building_type.replace(' ', '_')
     st.download_button('Download profile', profile_dw,  file_name='profile_{}_cluster{}.csv'.format(building_type, cluster[0]), mime='text/csv')
