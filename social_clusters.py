@@ -101,7 +101,7 @@ if __name__ == "__main__":
     # Dropdown list for the type of building
     building_type = st.selectbox('Type of building:', types,  index=1)
     #st.write(kproto)
-    row = np.array([scaled_consumption, weekend, evening, building_type])
+    #row = np.array([scaled_consumption, weekend, evening, building_type])
     #st.write(np.shape(row.reshape(1,-1)))
     #cluster = kproto.predict(row.reshape(1,-1), categorical=[3])
     # get the name of cluster
