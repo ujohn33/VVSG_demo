@@ -66,6 +66,9 @@ def load_metadata():
     return meta
 
 if __name__ == "__main__":
+    # add two logos
+    st.image('logos/VUB-EVERGI_MONO.jpg', width=200)
+    st.image('logos/vvsg_logo.png', width=200)
     st.title("Profile Clustering")
     profiles = load_data()
     kproto = load_model()
