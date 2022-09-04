@@ -47,7 +47,7 @@ import matplotlib.cm as cm
 
 @st.cache
 def load_data():
-    st_p = pd.read_csv(input_dir+'st_p_kproto10.csv', index_col=0, parse_dates=[0])
+    st_p = pd.read_csv(input_dir+'Kris_profiles.csv', index_col=0, parse_dates=[0])
     # drop nan and inf values
     st_p.dropna(inplace=True)
     # drop inf values
