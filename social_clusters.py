@@ -108,11 +108,10 @@ if __name__ == "__main__":
     for i, cl in enumerate(clusters):
         if building_type in cl:
             cluster = names[i]
-    #st.write(row)
     # markdown title
     st.markdown("## Predicted cluster: " + str(cluster[0]))
-    #st.write(profiles.columns)
-    ts = profiles[str(cluster[0])] * yearly_consumption
+    #ts = profiles[str(cluster[0])] * yearly_consumption
+    ts = profiles[str(cluster)] * yearly_consumption
     day_p = ts.groupby(ts.index.hour).mean()
     # set ggplot style in matplotlib
     plt.style.use('ggplot')
