@@ -15,6 +15,19 @@ scaler_dir = 'scalers/'
 input_dir = 'data/'
 
 types = ['Zwembad', 'Administratief centrum', 'Cultureel centrum','Museum', 'RVT/WZC/revalidatiecentrum','Technische middelbare school', 'Bibliotheek', 'Sporthal','Academie', 'Stadhuis/Gemeentehuis', 'Ontmoetingscentrum','Andere gebouwen', 'Sportcomplex', 'Algemene middelbare school','Ziekenhuis', 'Lagere school', 'Brandweerkazerne', 'Stadion','Werkplaats', 'OCMW Woningen','Buitengewoon lager onderwijs (MPI)', 'Politiegebouw', 'Jeugdhuis','Dienstencentrum/CAW/dagverblijf','Buitengewoon middelbaar onderwijs (BUSO)', 'Kleuterschool','OCMW Administratief centrum', 'Kast', 'Kinderdagverblijf/BKO/IBO','Laadeiland', 'Voetbalveld', 'Kerk', 'Pomp', 'Andere terreinen','Parking', 'Fontein', 'Tennisveld', 'Containerpark', 'Andere','School', 'Straatverlichting', 'Looppiste', 'Park']
+cl_A = ['Sporthal', 'Sportcomplex', 'Stadion']
+cl_B = ['Administratief centrum', 'Stadhuis/Gemeentehuis', 'OCMW Administratief centrum']
+cl_C = ['Lagere school', 'School', 'Kinderdagverblijf/BKO/IBO', 'Algemene middelbare school', 'Technische middelbare school', 'Buitengewoon lager onderwijs (MPI)', 'Buitengewoon middelbaar onderwijs (BUSO)', 'Kleuterschool']
+cl_D = ['Andere gebouwen', 'Kast', 'Kerk', 'Straatverlichting', 'Laadeiland', 'Park', 'Pomp', 'Voetbalveld', 'Andere', 'Andere terreinen', 'Containerpark', 'Fontein', 'Looppiste', 'Parking', 'Ziekenhuis']
+cl_E = ['Cultureel centrum', 'Ontmoetingscentrum', 'Bibliotheek', 'Academie', 'Museum', 'Jeugdhuis']
+cl_G = ['RVT/WZC/revalidatiecentrum', 'Dienstencentrum/CAW/dagverblijf']
+cl_H = ['Werkplaats']
+cl_I = ['Zwembad']
+cl_K = ['Brandweerkazerne', 'Politiegebouw']
+cl_F = ['OCMW Woningen']
+clusters = [cl_A, cl_B, cl_C, cl_D, cl_E, cl_G, cl_H, cl_I, cl_K, cl_F]
+names = ['A', 'B', 'C', 'D', 'E', 'G', 'H', 'I', 'K', 'F']
+
 
 import streamlit as st
 import matplotlib.pyplot as plt
@@ -57,27 +70,27 @@ if __name__ == "__main__":
     profiles = load_data()
     kproto = load_model()
     scaler = joblib.load(scaler_dir+'scaler.gz')
-    # double-ended slider morning/evening
-    evening = st.slider('Use of building in the evening:', 0.0, 1.0, 0.8, 0.01)
-    if 0 <= evening < 0.25:
-        st.markdown("The building is **_barely_ used** in the evening")
-    elif 0.25 <= evening < 0.5:
-        st.markdown("The building is **_sometimes_ used** in the evening")
-    elif 0.5 <= evening < 0.75:
-        st.markdown("The building is **_often_ used** in the evening")
-    elif 0.75 <= evening <= 1.0:
-        st.markdown("The building is **_mostly_ used** in the evening")
-    # double-ended slider morning/evening
-    weekend = st.slider('Use of building in the weekends:', 0.0, 1.0, 0.2, 0.01)
-    if 0 <= weekend < 0.25:
-        st.markdown("The building is **_barely_ used** in the weekends")
-    elif 0.25 <= weekend < 0.5:
-        st.markdown("The building is **_sometimes_ used** in the weekends")
-    elif 0.5 <= weekend < 0.75:
-        st.markdown("The building is **_often_ used** in the weekends")
-    elif 0.75 <= weekend <= 1.0:
-        st.markdown("The building is **_mostly_ used** in the weekends")
-    # Enter yearly consumption in float
+    # # double-ended slider morning/evening
+    # evening = st.slider('Use of building in the evening:', 0.0, 1.0, 0.8, 0.01)
+    # if 0 <= evening < 0.25:
+    #     st.markdown("The building is **_barely_ used** in the evening")
+    # elif 0.25 <= evening < 0.5:
+    #     st.markdown("The building is **_sometimes_ used** in the evening")
+    # elif 0.5 <= evening < 0.75:
+    #     st.markdown("The building is **_often_ used** in the evening")
+    # elif 0.75 <= evening <= 1.0:
+    #     st.markdown("The building is **_mostly_ used** in the evening")
+    # # double-ended slider morning/evening
+    # weekend = st.slider('Use of building in the weekends:', 0.0, 1.0, 0.2, 0.01)
+    # if 0 <= weekend < 0.25:
+    #     st.markdown("The building is **_barely_ used** in the weekends")
+    # elif 0.25 <= weekend < 0.5:
+    #     st.markdown("The building is **_sometimes_ used** in the weekends")
+    # elif 0.5 <= weekend < 0.75:
+    #     st.markdown("The building is **_often_ used** in the weekends")
+    # elif 0.75 <= weekend <= 1.0:
+    #     st.markdown("The building is **_mostly_ used** in the weekends")
+    # # Enter yearly consumption in float
     yearly_consumption = st.number_input('Yearly consumption [kWh]:', min_value=0, max_value=500000, value=130000, step=100)
     # scale yearly consumption using minmax scaler
     scaled_consumption = scaler.transform([[yearly_consumption]])[0][0]
@@ -87,7 +100,11 @@ if __name__ == "__main__":
     #st.write(kproto)
     row = np.array([scaled_consumption, weekend, evening, building_type])
     #st.write(np.shape(row.reshape(1,-1)))
-    cluster = kproto.predict(row.reshape(1,-1), categorical=[3])
+    #cluster = kproto.predict(row.reshape(1,-1), categorical=[3])
+    # get the name of cluster
+    for i, cl in enumerate(clusters):
+        if building_type in cl:
+            cluster = names[i]
     #st.write(row)
     # markdown title
     st.markdown("## Predicted cluster: " + str(cluster[0]))
