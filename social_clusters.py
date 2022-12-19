@@ -120,7 +120,7 @@ if __name__ == "__main__":
         if building_type in cl:
             cluster = names[i]
     # markdown title
-    st.markdown("## Predicted cluster: " + str(cluster[0]))
+    st.markdown("## Predicted cluster: " + str(cluster))
     #ts = profiles[str(cluster[0])] * yearly_consumption
     ts = profiles[str(cluster)] * yearly_consumption
     day_p = ts.groupby(ts.index.hour).mean()
