@@ -18,7 +18,7 @@ types = ['Zwembad', 'Administratief centrum', 'Cultureel centrum','Museum', 'RVT
 remove_types = ['Kast', 'Andere gebouwen', 'Andere',  'Andere terreinen', 'Looppiste', 'Laadeiland']
 types = [x for x in types if x not in remove_types]
 # alphabetical order
-types = types.sort()
+types.sort()
 cl_A = ['Sporthal', 'Sportcomplex', 'Stadion', 'Voetbalveld']
 cl_B = ['Administratief centrum', 'Stadhuis/Gemeentehuis', 'OCMW Administratief centrum']
 cl_C = ['Lagere school', 'School', 'Kinderdagverblijf/BKO/IBO', 'Algemene middelbare school', 'Technische middelbare school', 'Buitengewoon lager onderwijs (MPI)', 'Buitengewoon middelbaar onderwijs (BUSO)', 'Kleuterschool']
