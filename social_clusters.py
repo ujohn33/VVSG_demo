@@ -15,7 +15,7 @@ scaler_dir = 'scalers/'
 input_dir = 'data/'
 
 types = ['Zwembad', 'Administratief centrum', 'Cultureel centrum','Museum', 'RVT/WZC/revalidatiecentrum','Technische middelbare school', 'Bibliotheek', 'Sporthal','Academie', 'Stadhuis/Gemeentehuis', 'Ontmoetingscentrum','Andere gebouwen', 'Sportcomplex', 'Algemene middelbare school','Ziekenhuis', 'Lagere school', 'Brandweerkazerne', 'Stadion','Werkplaats', 'OCMW Woningen','Buitengewoon lager onderwijs (MPI)', 'Politiegebouw', 'Jeugdhuis','Dienstencentrum/CAW/dagverblijf','Buitengewoon middelbaar onderwijs (BUSO)', 'Kleuterschool','OCMW Administratief centrum', 'Kast', 'Kinderdagverblijf/BKO/IBO','Laadeiland', 'Voetbalveld', 'Kerk', 'Pomp', 'Andere terreinen','Parking', 'Fontein', 'Tennisveld', 'Containerpark', 'Andere','School', 'Straatverlichting', 'Looppiste', 'Park']
-remove_types = ['Kast' 'Andere gebouwen' 'Andere'  'Andere terreinen' 'Looppiste' 'Laadeiland']
+remove_types = ['Kast', 'Andere gebouwen', 'Andere',  'Andere terreinen', 'Looppiste', 'Laadeiland']
 types = [x for x in types if x not in remove_types]
 cl_A = ['Sporthal', 'Sportcomplex', 'Stadion', 'Voetbalveld']
 cl_B = ['Administratief centrum', 'Stadhuis/Gemeentehuis', 'OCMW Administratief centrum']
