@@ -15,18 +15,26 @@ scaler_dir = 'scalers/'
 input_dir = 'data/'
 
 types = ['Zwembad', 'Administratief centrum', 'Cultureel centrum','Museum', 'RVT/WZC/revalidatiecentrum','Technische middelbare school', 'Bibliotheek', 'Sporthal','Academie', 'Stadhuis/Gemeentehuis', 'Ontmoetingscentrum','Andere gebouwen', 'Sportcomplex', 'Algemene middelbare school','Ziekenhuis', 'Lagere school', 'Brandweerkazerne', 'Stadion','Werkplaats', 'OCMW Woningen','Buitengewoon lager onderwijs (MPI)', 'Politiegebouw', 'Jeugdhuis','Dienstencentrum/CAW/dagverblijf','Buitengewoon middelbaar onderwijs (BUSO)', 'Kleuterschool','OCMW Administratief centrum', 'Kast', 'Kinderdagverblijf/BKO/IBO','Laadeiland', 'Voetbalveld', 'Kerk', 'Pomp', 'Andere terreinen','Parking', 'Fontein', 'Tennisveld', 'Containerpark', 'Andere','School', 'Straatverlichting', 'Looppiste', 'Park']
-cl_A = ['Sporthal', 'Sportcomplex', 'Stadion']
+remove_types = ['Kast' 'Andere gebouwen' 'Andere'  'Andere terreinen' 'Looppiste' 'Laadeiland']
+types = [x for x in types if x not in remove_types]
+cl_A = ['Sporthal', 'Sportcomplex', 'Stadion', 'Voetbalveld']
 cl_B = ['Administratief centrum', 'Stadhuis/Gemeentehuis', 'OCMW Administratief centrum']
 cl_C = ['Lagere school', 'School', 'Kinderdagverblijf/BKO/IBO', 'Algemene middelbare school', 'Technische middelbare school', 'Buitengewoon lager onderwijs (MPI)', 'Buitengewoon middelbaar onderwijs (BUSO)', 'Kleuterschool']
-cl_D = ['Andere gebouwen', 'Kast', 'Kerk', 'Straatverlichting', 'Laadeiland', 'Park', 'Pomp', 'Voetbalveld', 'Andere', 'Andere terreinen', 'Containerpark', 'Fontein', 'Looppiste', 'Parking', 'Ziekenhuis']
+cl_D_1 = ['Containerpark', 'Parking']
+cl_D_2 = ['Fontein']
+cl_D_3 = ['Kerk']
+cl_D_4 = ['Park']
+cl_D_5 = ['Pomp']
+cl_D_6 = ['Straatverlichting']
+cl_D_7 = ['Ziekenhuis']
 cl_E = ['Cultureel centrum', 'Ontmoetingscentrum', 'Bibliotheek', 'Academie', 'Museum', 'Jeugdhuis']
 cl_G = ['RVT/WZC/revalidatiecentrum', 'Dienstencentrum/CAW/dagverblijf']
 cl_H = ['Werkplaats']
 cl_I = ['Zwembad']
 cl_K = ['Brandweerkazerne', 'Politiegebouw']
 cl_F = ['OCMW Woningen']
-clusters = [cl_A, cl_B, cl_C, cl_D, cl_E, cl_G, cl_H, cl_I, cl_K, cl_F]
-names = ['A', 'B', 'C', 'D', 'E', 'G', 'H', 'I', 'K', 'F']
+clusters = [cl_A, cl_B, cl_C, cl_D_1, cl_D_2, cl_D_3, cl_D_4, cl_D_5, cl_D_6, cl_D_7, cl_E, cl_G, cl_H, cl_I, cl_K, cl_F]
+names = ['A', 'B', 'C', 'D_1', 'D_2',  'D_3',  'D_4',  'D_5',  'D_6',  'D_7', 'E', 'G', 'H', 'I', 'K', 'F']
 
 
 import streamlit as st
@@ -47,7 +55,7 @@ import matplotlib.cm as cm
 
 @st.cache
 def load_data():
-    st_p = pd.read_csv(input_dir+'Kris_profiles.csv', index_col=0, parse_dates=[0])
+    st_p = pd.read_csv(input_dir+'Kris_profiles_reviewed.csv', index_col=0, parse_dates=[0])
     # drop nan and inf values
     st_p.dropna(inplace=True)
     # drop inf values
