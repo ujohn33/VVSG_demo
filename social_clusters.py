@@ -56,8 +56,8 @@ import matplotlib.cm as cm
 #     self.params = params
 
 @st.cache
-def load_data():
-    st_p = pd.read_csv(input_dir+'Kris_profiles_reviewed.csv', index_col=0, parse_dates=[0])
+def load_data(address):
+    st_p = pd.read_csv(input_dir+address, index_col=0, parse_dates=[0])
     # drop nan and inf values
     st_p.dropna(inplace=True)
     # drop inf values
@@ -81,29 +81,8 @@ if __name__ == "__main__":
     col1.image('logos/vvsg_logo.png', width=200)
     col2.image('logos/VUB-EVERGI_MONO.jpg', width=200)
     st.title("Profile Clustering")
-    profiles = load_data()
     kproto = load_model()
     scaler = joblib.load(scaler_dir+'scaler.gz')
-    # # double-ended slider morning/evening
-    # evening = st.slider('Use of building in the evening:', 0.0, 1.0, 0.8, 0.01)
-    # if 0 <= evening < 0.25:
-    #     st.markdown("The building is **_barely_ used** in the evening")
-    # elif 0.25 <= evening < 0.5:
-    #     st.markdown("The building is **_sometimes_ used** in the evening")
-    # elif 0.5 <= evening < 0.75:
-    #     st.markdown("The building is **_often_ used** in the evening")
-    # elif 0.75 <= evening <= 1.0:
-    #     st.markdown("The building is **_mostly_ used** in the evening")
-    # # double-ended slider morning/evening
-    # weekend = st.slider('Use of building in the weekends:', 0.0, 1.0, 0.2, 0.01)
-    # if 0 <= weekend < 0.25:
-    #     st.markdown("The building is **_barely_ used** in the weekends")
-    # elif 0.25 <= weekend < 0.5:
-    #     st.markdown("The building is **_sometimes_ used** in the weekends")
-    # elif 0.5 <= weekend < 0.75:
-    #     st.markdown("The building is **_often_ used** in the weekends")
-    # elif 0.75 <= weekend <= 1.0:
-    #     st.markdown("The building is **_mostly_ used** in the weekends")
     # # Enter yearly consumption in float
     yearly_consumption = st.number_input('Yearly consumption [kWh]:', min_value=0, max_value=500000, value=130000, step=100)
     # scale yearly consumption using minmax scaler
@@ -111,15 +90,42 @@ if __name__ == "__main__":
     #st.write(scaled_consumption)
     # Dropdown list for the type of building
     building_type = st.selectbox('Type of building:', types,  index=1)
-    #st.write(kproto)
-    #row = np.array([scaled_consumption, weekend, evening, building_type])
-    #st.write(np.shape(row.reshape(1,-1)))
-    #cluster = kproto.predict(row.reshape(1,-1), categorical=[3])
-    # get the name of cluster
-    for i, cl in enumerate(clusters):
-        if building_type in cl:
-            cluster = names[i]
-    # markdown title
+    exp = st.expander("Advanced options")
+    # make the below part
+    with exp:
+        # double-ended slider morning/evening
+        evening = st.slider('Use of building in the evening:', 0, 100, 80, 1, 
+    format='%s %%')
+        if 0 <= evening < 25:
+            st.markdown("The building is **_barely_ used** in the evening")
+        elif 25 <= evening < 50:
+            st.markdown("The building is **_sometimes_ used** in the evening")
+        elif 50 <= evening < 75:
+            st.markdown("The building is **_often_ used** in the evening")
+        elif 75 <= evening <= 100:
+            st.markdown("The building is **_mostly_ used** in the evening")
+        # double-ended slider morning/evening
+        weekend = st.slider('Use of building in the weekends:', 0, 100, 20, 1, 
+    format='%s %%')
+        if 0 <= weekend < 25:
+            st.markdown("The building is **_barely_ used** in the weekends")
+        elif 25 <= weekend < 50:
+            st.markdown("The building is **_sometimes_ used** in the weekends")
+        elif 50 <= weekend < 75:
+            st.markdown("The building is **_often_ used** in the weekends")
+        elif 75 <= weekend <= 100:
+            st.markdown("The building is **_mostly_ used** in the weekends")
+        # Put a button here saying calculate
+        calc = st.button('Calculate')
+    if calc:
+        row = np.array([scaled_consumption, weekend, evening, building_type])
+        profiles = load_data('st_p_kproto10.csv')
+        cluster = kproto.predict(row.reshape(1,-1), categorical=[3])[0]
+    else:
+        profiles = load_data('Kris_profiles_reviewed.csv')
+        for i, cl in enumerate(clusters):
+            if building_type in cl:
+                cluster = names[i]
     st.markdown("## Predicted cluster: " + str(cluster))
     #ts = profiles[str(cluster[0])] * yearly_consumption
     ts = profiles[str(cluster)] * yearly_consumption
@@ -158,4 +164,4 @@ if __name__ == "__main__":
     profile_dw = ts.to_csv().encode('utf-8')
     # fill spaces with underscores in building type
     building_type = building_type.replace(' ', '_')
-    st.download_button('Download profile', profile_dw,  file_name='profile_{}_cluster{}.csv'.format(building_type, cluster[0]), mime='text/csv')
+    st.download_button('Download profile', profile_dw,  file_name='profile_{}_cluster{}.csv'.format(building_type, cluster), mime='text/csv')
