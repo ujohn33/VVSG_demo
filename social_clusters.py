@@ -77,8 +77,8 @@ def load_metadata():
 
 if __name__ == "__main__":
     # add two logos next to each other
-    col1, col2 = st.columns(2)
-    col1.image('logos/vvsg_logo.png', width=200)
+    col1, col2 = st.columns(1)
+    #col1.image('logos/vvsg_logo.png', width=200)
     col2.image('logos/VUB-EVERGI_MONO.jpg', width=200)
     st.title("Profile Clustering")
     kproto = load_model()
