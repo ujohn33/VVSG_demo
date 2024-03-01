@@ -15,15 +15,21 @@ This project is developed for VVSG (Association of Flemish Municipalities) to ge
 
 The application is built with Streamlit and can be run in a web browser. Here's a brief overview of the user interface:
 
-1. The application displays an image of the VUB logo and the title "Profile Clustering".
-2. The user is asked to input their yearly consumption in kWh, which is then scaled using the loaded scaler.
-3. The user is asked to select the type of building from a dropdown list.
-4. The user can specify more details about the building usage in the "Advanced options". Inside the "Advanced options", the user can specify the usage of the building in the evening and on weekends using sliders. Depending on the slider value, a message about the building usage is displayed.
-5. A button for calculation is placed at the end (to be implemented).
+1. The user is asked to input their yearly consumption in kWh, which is then scaled using the loaded scaler.
+2. The user is asked to select the type of building from a dropdown list.
+3. The user can specify more details about the building usage in the "Advanced options". Inside the "Advanced options", the user can specify the usage of the building in the evening and on weekends using sliders. Depending on the slider value, a message about the building usage is displayed.
 
 ## Installation
 
 To run the application, you need to have Python installed on your machine. You also need to install the required Python packages. You can install the packages using the following command:
+
+```bash
+pip install -r requirements.txt
+```
+
+```bash
+streamlit run social_clusters.py
+```
 
 After installing the packages, you can run the application using the following command:
 
