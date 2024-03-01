@@ -6,9 +6,6 @@ This project is developed for VVSG (Association of Flemish Municipalities) to ge
 
 ## Features
 
-- Load a pre-trained model and a scaler from disk.
-- User inputs for building type and yearly electricity consumption.
-- Advanced options for specifying the fraction of evening/morning and weekend/weekday load.
 - Based on the user inputs, the algorithm picks the most fitting cluster and generates a standard synthetic load profile.
 
 ## Usage
