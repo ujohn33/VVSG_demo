@@ -27,12 +27,11 @@ To run the application, you need to have Python installed on your machine. You a
 pip install -r requirements.txt
 ```
 
+After installing the packages, you can run the application using the following command:
+
 ```bash
 streamlit run social_clusters.py
 ```
-
-After installing the packages, you can run the application using the following command:
-
 ## Contributing
 
 Contributions are welcome. Please make sure to follow the project's contribution guidelines.
